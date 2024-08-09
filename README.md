@@ -8,6 +8,44 @@ In order to make the call you will need to have a service account created and an
 
 Here we are requiring a specific bucket and object path when you upload the file. The bucket name is `socs-sbx` and the object path is `offline/crm-data/${CUSTOMER_ID}/${DATE}`. The `CUSTOMER_ID` and `DATE` are parameters that you will need to pass to the script. The `DATE` should be in the format `YYYY-MM-DD`. The `CUSTOMER_ID` is a string that identifies you in our system. We will provide this information to you when we provide the key file.
 
+### Payload
+
+The json payload should be in the following format:
+
+```json
+{
+	"Metadata": {
+		"ClientId": "123456", // Same as the customer id
+		"SentTimeStampUTC": "2023-03-23T22:11:13.2311903Z"
+	}
+	"Milestones": [ 
+		{
+			"Email": "example@email.com",
+			"Phone": "+1(801)555-1234",
+			"FullName": "John Doe", // Optional
+			"Address": { // Optional of the user
+				"City": "Salt Lake City",
+				"State": "UT",
+				"Country": "USA",
+				"Zip": "84101",
+				"Street": "123 Main St"
+			},
+			"TimestampUtc": "2023-03-23T22:11:13.2311903Z", // time of milestone
+			"OrderID": "123456",
+			"Quantity": 1, 
+			"ConversionType": "",
+
+            // optional fields
+			"Region": "UT", 
+			"City": "Salt Lake City",
+			"MerchantID": "123456",
+			"ProductID": "123456",
+			"ProductPrice": 123.45, 
+		}
+	]
+}
+```
+
 ### Authentication
 
 once you have the key file, you can set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of the key file. This will allow the application to authenticate with GCS.
