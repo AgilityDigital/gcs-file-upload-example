@@ -8,6 +8,6 @@ CUSTOMER_ID="12345"
 DATE=$(date +%Y-%m-%d)
 
 # Set the object location
-OBJECT_LOCATION="test.json"
+OBJECT_LOCATION="example.json"
 
-gsutil cp ${OBJECT_LOCATION} gs://socs-sbx/offline/crm-data/${CUSTOMER_ID}/${DATE}
+gsutil cp ${OBJECT_LOCATION} gs://agility-digital/offline/${CUSTOMER_ID}/crm-data/${DATE}

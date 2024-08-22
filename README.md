@@ -6,7 +6,7 @@ This is a simple demo to upload a file to Google Cloud Storage (GCS) using Pytho
 
 In order to make the call you will need to have a service account created and an access key attached to it. The key should be in JSON format. The key should be generated once and rotated with some frequency.
 
-Here we are requiring a specific bucket and object path when you upload the file. The bucket name is `socs-sbx` and the object path is `offline/crm-data/${CUSTOMER_ID}/${DATE}`. The `CUSTOMER_ID` and `DATE` are parameters that you will need to pass to the script. The `DATE` should be in the format `YYYY-MM-DD`. The `CUSTOMER_ID` is a string that identifies you in our system. We will provide this information to you when we provide the key file.
+Here we are requiring a specific bucket and object path when you upload the file. The bucket name is `agility-digital` and the object path is `offline/${CUSTOMER_ID}/crm-data/${DATE}`. The `CUSTOMER_ID` and `DATE` are parameters that you will need to pass to the script. The `DATE` should be in the format `YYYY-MM-DD`. The `CUSTOMER_ID` is a string that identifies you in our system. We will provide this information to you when we provide the key file.
 
 ### Payload
 
@@ -62,7 +62,7 @@ We are following these steps from the [official GCS documentation](https://cloud
 curl -X POST --data-binary @test.json \
     -H "Authorization: Bearer $(gcloud auth print-access-token)" \
     -H "Content-Type: application/json" \
-    "https://storage.googleapis.com/upload/storage/v1/b/socs-sbx/o?uploadType=media&name=offline/crm-data/${CUSTOMER_ID}/${DATE}"
+    "https://storage.googleapis.com/upload/storage/v1/b/agility-digital/o?uploadType=media&name=offline/${CUSTOMER_ID}/crm-data/${DATE}"
 ```
 
 To see the runable script, check the [`upload.sh` file.](/bin/upload-curl.sh)
@@ -88,9 +88,9 @@ def upload_blob(bucket_name, source_file_name, credentials, destination_blob_nam
 source_file_name = sys.argv[1] # "local/path/to/file"
 key_file = sys.argv[2] # "path/to/keyfile.json"
 customer_id = sys.argv[3] # "customer-id"
-bucket_name = "socs-sbx"
+bucket_name = "agility-digital"
     
-object_name = "offline/crm-data/{}/{}".format(customer_id, datetime.now().strftime("%Y-%m-%d"))
+object_name = "offline/{}/crm-data/{}".format(customer_id, datetime.now().strftime("%Y-%m-%d"))
 upload_blob(bucket_name, source_file_name, creds, object_name)
 ```
 
@@ -105,7 +105,7 @@ GOOGLE_APPLICATION_CREDENTIALS=.credentials.json python3 src/upload.py test.json
 gsutil is a command line tool that allows you to interact with GCS. You can use it to upload files, download files, list files, etc. It is installed via the Google Cloud SDK. You can use the following command to upload a file to GCS:
 
 ```bash
-gsutil cp ${OBJECT_LOCATION} gs://socs-sbx/offline/crm-data/${CUSTOMER_ID}/${DATE}
+gsutil cp ${OBJECT_LOCATION} gs://agility-digital/offline/${CUSTOMER_ID}/crm-data/${DATE}
 ```
 
 To see the runable script, check the [`upload-gsutil.sh` file.](/bin/upload-gsutil.sh)

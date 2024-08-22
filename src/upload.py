@@ -29,5 +29,5 @@ bucket_name = "socs-sbx"
     
 print(f"Uploading {source_file_name} to {customer_id} bucket")
 
-object_name = "offline/crm-data/{}/{}".format(customer_id, datetime.now().strftime("%Y-%m-%d"))
+object_name = "offline/{}/crm-data/{}".format(customer_id, datetime.now().strftime("%Y-%m-%d"))
 upload_blob(bucket_name, source_file_name, creds, object_name)
