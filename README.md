@@ -1,21 +1,22 @@
 # GCS file upload Demo
 
-This is a simple demo to upload a file to Google Cloud Storage (GCS) using Python, gsutil and the GCS API. The demo is based on the [official GCS documentation](https://cloud.google.com/storage/docs/). The credentials needed are a key file in JSON format, which can be obtained from the Google Cloud Console.
+This is a simple demo to upload a file to Google Cloud Storage (GCS) using Python, gsutil and the GCS API. The demo is based on the [official GCS documentation](https://cloud.google.com/storage/docs/). The credentials needed are a key file in JSON format, which can be obtained from the Google Cloud Console. This is up to date as of 2024-09-09.
 
 ## Requirements
 
 In order to make the call you will need to have a service account created and an access key attached to it. The key should be in JSON format. The key should be generated once and rotated with some frequency.
 
-Here we are requiring a specific bucket and object path when you upload the file. The bucket name is `agility-digital` and the object path is `offline/${CUSTOMER_ID}/crm-data/${DATE}`. The `CUSTOMER_ID` and `DATE` are parameters that you will need to pass to the script. The `DATE` should be in the format `YYYY-MM-DD`. The `CUSTOMER_ID` is a string that identifies you in our system. We will provide this information to you when we provide the key file.
+Here we are requiring a specific bucket and object path when you upload the file. The bucket name is `agility-digital` and the object path is `offline/crm-data/${CUSTOMER_ID}/${DATE}`. The `CUSTOMER_ID` and `DATE` are parameters that you will need to pass to the script. The `DATE` should be in the format `YYYY-MM-DD`. The `CUSTOMER_ID` is a string that identifies you in our system. We will provide this information to you when we provide the key file.
 
 ### Payload
 
-The json payload should be in the following format:
+The files you upload to the bucket should be JSON in format following the format below. The size limit in GCS is [5 TB](https://support.google.com/a/answer/172541?hl=en#:~:text=You%20can%20upload%20and%20synchronize,GB%20can't%20be%20copied.), but please we ask that you keep the files under 500GB and that the files contain not more data than what pertains to the date if the folder. If you choose to partition the files further you can do that at your disgression. The json payload should be in the following format:
 
 ```json
 {
+{
 	"Metadata": {
-		"ClientId": "123456", // Same as the customer id
+		"ClientId": "123456", // Same as the customer_id
 		"SentTimeStampUTC": "2023-03-23T22:11:13.2311903Z"
 	}
 	"Milestones": [ 
@@ -31,24 +32,43 @@ The json payload should be in the following format:
 				"Street": "123 Main St"
 			},
 			"TimestampUtc": "2023-03-23T22:11:13.2311903Z", // time of milestone
-			"OrderID": "123456",
-			"Quantity": 1, 
-			"ConversionType": "",
+			"ConversionType": "phone_offline",
+			"ConversionKey": "123456", // TD10
+			"ProductID": "123456", //TD1 
 
-            // optional fields
+            // Optional fields
+			"Quantity": 1, 
 			"Region": "UT", 
 			"City": "Salt Lake City",
+            "OrderID": "123456", 
 			"MerchantID": "123456",
-			"ProductID": "123456",
-			"ProductPrice": 123.45, 
+			"Value": 123.45,
+			"CustomFields": {
+				"TrackingData2": "CustomValue1", // TD2
+				"TrackingData3": "CustomValue2", // TD3
+				"TrackingData4": "CustomValue3", // TD4
+				"TrackingData5": "CustomValue4", // TD5
+				"TrackingData6": "CustomValue5", // TD6
+				"TrackingData7": "CustomValue6", // TD7
+				"TrackingData8": "CustomValue7", // TD8
+				"TrackingData9": "CustomValue8", // TD9
+			}
 		}
 	]
 }
 ```
 
+You can add multiple milestones to the file. The `Metadata` section is required and contains the `ClientId` and `SentTimeStampUTC` fields. The `Milestones` section is an array of milestones. Each milestone should have the following fields:
+
+#### Required Marketing Fields
+The `ConversionType` is a string value that is selected to best match the kind of event that the milestone is. We have a preset list of offline conversion types that you can choose from, but you will have some additional one determined by your Agility representative. `ConversionKey` is the unique identifier for your milestone, it could be an orderID, transactionID, SKU, or inboundCallID (it may have been referred to as TD10 in the past). The `ProductID` is the unique identifier for the product that was purchased (it may have been referred to as TD1 in the past). 
+
+#### Optional Marketing Fields
+The `Value` field is the total value of the transaction. The `Quantity` field is the number of items purchased.The `CustomFields` are optional fields that you can use to pass additional information about the milestone. They are fields that you will have established as part of you onboarding process with your Precision Strategy Consultant. Some of the CustomFields may be duplicated with some standardized fields. This is expected to help us better track certain statistics. The `Region`, `City`, `OrderID`, and `MerchantID` fields are optional fields that you can use to pass additional information about the milestone.
+
 ### Authentication
 
-once you have the key file, you can set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of the key file. This will allow the application to authenticate with GCS.
+Once you have the key file, you can set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of the key file. This will allow the application to authenticate with GCS.
 
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS="/path/to/keyfile.json"
