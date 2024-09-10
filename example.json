@@ -16,16 +16,26 @@
 				"Street": "123 Main St"
 			},
 			"TimestampUtc": "2023-03-23T22:11:13.2311903Z", // time of milestone
-			"OrderID": "123456",
-			"Quantity": 1, 
-			"ConversionType": "",
+			"ConversionType": "phone_offline",
+			"ConversionKey": "123456", // TD10
+			"ProductID": "123456", //TD1 
 
-            // optional fields
+			// Optional fields
+			"Quantity": 1, 
 			"Region": "UT", 
 			"City": "Salt Lake City",
 			"MerchantID": "123456",
-			"ProductID": "123456",
-			"ProductPrice": 123.45, 
+			"Value": 123.45,
+			"CustomFields": {
+				"TrackingData2": "CustomValue1", // TD2
+				"TrackingData3": "CustomValue2", // TD3
+				"TrackingData4": "CustomValue3", // TD4
+				"TrackingData5": "CustomValue4", // TD5
+				"TrackingData6": "CustomValue5", // TD6
+				"TrackingData7": "CustomValue6", // TD7
+				"TrackingData8": "CustomValue7", // TD8
+				"TrackingData9": "CustomValue8", // TD9
+			}
 		}
 	]
 }
