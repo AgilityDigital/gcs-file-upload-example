@@ -57,14 +57,27 @@ The files you upload to the bucket should be JSON in format following the format
 	]
 }
 ```
+#### Metadata
 
 You can add multiple milestones to the file. The `Metadata` section is required and contains the `ClientId` and `SentTimeStampUTC` fields. The `Milestones` section is an array of milestones. Each milestone should have the following fields:
 
+The `ClientID` will be provided to you by agility and it links your account to conversion tracking algorithm in The Trade Desk.  This is a string.
+
+`SentTimeStampUTC` is the time that the file was sent to us. It needs to be in one of the following formats: `2006-01-02T15:04:05Z07:00` or `2006-01-02 15:04:05`. This is a string.
+
 #### Required Marketing Fields
-The `ConversionType` is a string value that is selected to best match the kind of event that the milestone is. We have a preset list of offline conversion types that you can choose from, but you will have some additional one determined by your Agility representative. `ConversionKey` is the unique identifier for your milestone, it could be an orderID, transactionID, SKU, or inboundCallID (it may have been referred to as TD10 in the past). The `ProductID` is the unique identifier for the product that was purchased (it may have been referred to as TD1 in the past). 
+
+* The `ConversionType` is a string value that is selected to best match the kind of event that the milestone is. We have a preset list of offline conversion types that you can choose from, but you will have some additional one determined by your Agility representative. This is a string.
+* `ConversionKey` is the unique identifier for your milestone, it could be an orderID, transactionID, SKU, or inboundCallID (it may have been referred to as TD10 in the past).  This is a string.
+* The `ProductID` is the unique identifier for the product that was purchased (it may have been referred to as TD1 in the past).  This is a string.
+* The `Email` and `Phone` fields are used to identify the user. one of them is required. These are strings.
 
 #### Optional Marketing Fields
-The `Value` field is the total value of the transaction. The `Quantity` field is the number of items purchased.The `CustomFields` are optional fields that you can use to pass additional information about the milestone. They are fields that you will have established as part of you onboarding process with your Precision Strategy Consultant. Some of the CustomFields may be duplicated with some standardized fields. This is expected to help us better track certain statistics. The `Region`, `City`, `OrderID`, and `MerchantID` fields are optional fields that you can use to pass additional information about the milestone.
+
+* The `Value` field is the total value of the transaction. This is a float value.
+* The `Quantity` field is the number of items purchased. This is an integer value.
+* The `CustomFields` are optional fields that you can use to pass additional information about the milestone. They are fields that you will have established as part of you onboarding process with your Precision Strategy Consultant. Some of the CustomFields may be duplicated with some standardized fields. This is expected to help us better track certain statistics. These are strings
+* The `Region`, `City`, `OrderID`, and `MerchantID` fields are optional fields that you can use to pass additional information about the milestone. These are strings.
 
 ### Authentication
 
