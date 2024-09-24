@@ -129,3 +129,7 @@ gsutil cp ${OBJECT_LOCATION} gs://agility-digital/offline/${CUSTOMER_ID}/crm-dat
 ```
 
 To see the runable script, check the [`upload-gsutil.sh` file.](/bin/upload-gsutil.sh)
+
+## Testing
+
+We have a sandox bucket you can send your test files to. The path is `agility-digital`. You can use the same path format as the production bucket, but the `CUSTOMER_ID` in the path and the payload should be `sandbox`. This data will not be sent to any of our partners and will be used for testing purposes only.
