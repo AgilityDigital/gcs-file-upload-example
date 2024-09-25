@@ -6,7 +6,7 @@ This is a simple demo to upload a file to Google Cloud Storage (GCS) using Pytho
 
 In order to make the call you will need to have a service account created and an access key attached to it. The key should be in JSON format. The key should be generated once and rotated with some frequency.
 
-Here we are requiring a specific bucket and object path when you upload the file. The bucket name is `agility-digital` and the object path is `offline/crm-data/${CUSTOMER_ID}/${DATE}`. The `CUSTOMER_ID` and `DATE` are parameters that you will need to pass to the script. The `DATE` should be in the format `YYYY-MM-DD`. The `CUSTOMER_ID` is a string that identifies you in our system. We will provide this information to you when we provide the key file.
+Here we are requiring a specific bucket and object path when you upload the file. The bucket name is `agility-digital` and the object path is `offline/${CUSTOMER_ID}/crm-data/${DATE}`. The `CUSTOMER_ID` and `DATE` are parameters that you will need to pass to the script. The `DATE` should be in the format `YYYY-MM-DD`. The `CUSTOMER_ID` is a string that identifies you in our system. We will provide this information to you when we provide the key file.
 
 ### Payload
 
