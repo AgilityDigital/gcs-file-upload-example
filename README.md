@@ -12,6 +12,51 @@ Here we are requiring a specific bucket and object path when you upload the file
 
 The files you upload to the bucket should be JSON in format following the format below. The size limit in GCS is [5 TB](https://support.google.com/a/answer/172541?hl=en#:~:text=You%20can%20upload%20and%20synchronize,GB%20can't%20be%20copied.), but please we ask that you keep the files under 500GB and that the files contain not more data than what pertains to the date if the folder. If you choose to partition the files further you can do that at your disgression. The json payload should be in the following format:
 
+Payload formatings are as follows:
+
+| Field | Description | Type | Required |
+| --- | --- | --- | --- |
+| Metadata | Contains the metadata for the file | Object | Yes |
+| Milestones | Contains the milestones events that correspond to a conversion. There must be at least one conversion per file | Array | Yes |
+
+| Metadata Fields | Description | Type | Required |
+| --- | --- | --- | --- |
+| ClientId | The unique identifier for the client. Provided to you by Agility. Use Sandbox for testing | String | Yes |
+| SentTimeStampUTC | The time the file was sent in UTC. Use the Format `2023-03-23T22:11:13.2311903Z` | String | Yes |
+
+| Milestone Fields | Description | Type | Required |
+| --- | --- | --- | --- |
+| Email | The email of the user | String | If phone or address provided |
+| Phone | The phone number of the user | String | If email or address provided |
+| FullName | The full name of the user | String | No |
+| Address | The address of the user | Object | If email and phone not provided |
+| TimestampUtc | The time of the milestone in UTC. Use the Format `2023-03-23T22:11:13.2311903Z` | String | Yes |
+| ConversionType | The type of conversion. Use the preset list of offline conversion types. The list is set during the onboarding process | String | Yes |
+| ConversionKey | The unique identifier for the milestone. It could be an orderID, transactionID, SKU, or inboundCallID | String | Yes |
+| ProductID | The unique identifier for the product that was purchased | String | Yes |
+| Quantity | The number of items purchased | Integer | No |
+| Value | The total value of the transaction | Float | No |
+| CustomFields | Additional fields that you can use to pass additional information about the milestone | Object | No |
+
+| Address Fields | Description | Type | Required |
+| --- | --- | --- | --- |
+| City | The city of the user | String | Yes |
+| State | The state of the user | String | Yes |
+| Country | The country of the user | String | Yes |
+| Zip | The zip code of the user | String | Yes |
+| Street | The street address of the user | String | Yes |
+
+| CustomFields Fields | Description | Type | Required |
+| --- | --- | --- | --- |
+| TrackingData2 | Determined during onboarding | String | No |
+| TrackingData3 | Determined during onboarding | String | No |
+| TrackingData4 | Determined during onboarding | String | No |
+| TrackingData5 | Determined during onboarding | String | No |
+| TrackingData6 | Determined during onboarding | String | No |
+| TrackingData7 | Determined during onboarding | String | No |
+| TrackingData8 | Determined during onboarding | String | No |
+| TrackingData9 | Determined during onboarding | String | No |
+
 ```json
 {
 {
