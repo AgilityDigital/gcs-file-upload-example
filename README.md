@@ -6,7 +6,8 @@ This is a simple demo to upload a file to Google Cloud Storage (GCS) using Pytho
 
 In order to make the call you will need to have a service account created and an access key attached to it. The key should be in JSON format. The key should be generated once and rotated with some frequency.
 
-Here we are requiring a specific bucket and object path when you upload the file. The bucket name is `agility-digital` and the object path is `offline/${CUSTOMER_ID}/crm-data/${DATE}`. The `CUSTOMER_ID` and `DATE` are parameters that you will need to pass to the script. The `DATE` should be in the format `YYYY-MM-DD`. The `CUSTOMER_ID` is a string that identifies you in our system. We will provide this information to you when we provide the key file.
+Here we are requiring a specific bucket and object path when you upload the file. 
+The bucket name will be provided to you during oboarding but for this doc we will use `{BUCKET_NAME}` and the object path is `/offline/conversions/{DATE}/{FILENAME}`. 
 
 ### Payload
 
@@ -60,27 +61,26 @@ Payload formatings are as follows:
 ```json
 {
 	"Metadata": {
-		"ClientId": "123456", // Same as the customer_id
+		"ClientId": "123456",
 		"SentTimeStampUTC": "2023-03-23T22:11:13.2311903Z"
 	}
 	"Milestones": [ 
 		{
 			"Email": "example@email.com",
 			"Phone": "+1(801)555-1234",
-			"FullName": "John Doe", // Optional
-			"Address": { // Optional of the user
+			"FullName": "John Doe",
+			"Address": { 
 				"City": "Salt Lake City",
 				"State": "UT",
 				"Country": "USA",
 				"Zip": "84101",
 				"Street": "123 Main St"
 			},
-			"TimestampUtc": "2023-03-23T22:11:13.2311903Z", // time of milestone
+			"TimestampUtc": "2023-03-23T22:11:13.2311903Z", 
 			"ConversionType": "phone_offline",
-			"ConversionKey": "123456", // TD10
-			"ProductID": "123456", //TD1 
+			"ConversionKey": "123456", 
+			"ProductID": "123456", 
 
-            // Optional fields
 			"Quantity": 1, 
 			"Region": "UT", 
 			"City": "Salt Lake City",
@@ -88,14 +88,14 @@ Payload formatings are as follows:
 			"MerchantID": "123456",
 			"Value": 123.45,
 			"CustomFields": {
-				"TrackingData2": "CustomValue1", // TD2
-				"TrackingData3": "CustomValue2", // TD3
-				"TrackingData4": "CustomValue3", // TD4
-				"TrackingData5": "CustomValue4", // TD5
-				"TrackingData6": "CustomValue5", // TD6
-				"TrackingData7": "CustomValue6", // TD7
-				"TrackingData8": "CustomValue7", // TD8
-				"TrackingData9": "CustomValue8", // TD9
+				"TrackingData2": "CustomValue1", 
+				"TrackingData3": "CustomValue2", 
+				"TrackingData4": "CustomValue3", 
+				"TrackingData5": "CustomValue4",
+				"TrackingData6": "CustomValue5",
+				"TrackingData7": "CustomValue6", 
+				"TrackingData8": "CustomValue7",
+				"TrackingData9": "CustomValue8",
 			}
 		}
 	]
@@ -139,7 +139,7 @@ We are following these steps from the [official GCS documentation](https://cloud
 curl -X POST --data-binary @test.json \
     -H "Authorization: Bearer $(gcloud auth print-access-token)" \
     -H "Content-Type: application/json" \
-    "https://storage.googleapis.com/upload/storage/v1/b/agility-digital/o?uploadType=media&name=offline/${CUSTOMER_ID}/crm-data/${DATE}"
+    "https://storage.googleapis.com/upload/storage/v1/b/${BUCKET_NAME}/o?uploadType=media&name=offline/conversions/${DATE}"
 ```
 
 To see the runable script, check the [`upload.sh` file.](/bin/upload-curl.sh)
@@ -165,16 +165,16 @@ def upload_blob(bucket_name, source_file_name, credentials, destination_blob_nam
 source_file_name = sys.argv[1] # "local/path/to/file"
 key_file = sys.argv[2] # "path/to/keyfile.json"
 customer_id = sys.argv[3] # "customer-id"
-bucket_name = "agility-digital"
+bucket_name = "{BUCKET_NAME}"
     
-object_name = "offline/{}/crm-data/{}".format(customer_id, datetime.now().strftime("%Y-%m-%d"))
+object_name = "offline/conversions/{DATE}".format(customer_id, datetime.now().strftime("%Y-%m-%d"))
 upload_blob(bucket_name, source_file_name, creds, object_name)
 ```
 
 To see the runable script, check the [`upload.py` file.](/src/upload.py)
 Use this command to run the script:
 ```bash
-GOOGLE_APPLICATION_CREDENTIALS=.credentials.json python3 src/upload.py test.json .credentials.json 123456
+GOOGLE_APPLICATION_CREDENTIALS=.credentials.json python3 src/upload.py test.json .credentials.json ${CLIENT_ID}
 ```
 
 ### gsutil
@@ -182,11 +182,11 @@ GOOGLE_APPLICATION_CREDENTIALS=.credentials.json python3 src/upload.py test.json
 gsutil is a command line tool that allows you to interact with GCS. You can use it to upload files, download files, list files, etc. It is installed via the Google Cloud SDK. You can use the following command to upload a file to GCS:
 
 ```bash
-gsutil cp ${OBJECT_LOCATION} gs://agility-digital/offline/${CUSTOMER_ID}/crm-data/${DATE}
+gsutil cp ${OBJECT_LOCATION} gs://${BUCKET_NAME}/offline/conversions/${DATE}
 ```
 
 To see the runable script, check the [`upload-gsutil.sh` file.](/bin/upload-gsutil.sh)
 
 ## Testing
 
-We have a sandox bucket you can send your test files to. The path is `agility-digital`. You can use the same path format as the production bucket, but the `CUSTOMER_ID` in the path and the payload should be `sandbox`. This data will not be sent to any of our partners and will be used for testing purposes only.
+You can use the same path format as the production bucket, but the `CLIENT_ID` in the the payload should be `sandbox`. This data will not be sent to any of our partners and will be used for testing purposes only.

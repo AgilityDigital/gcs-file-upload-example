@@ -25,9 +25,9 @@ def upload_blob(bucket_name, source_file_name, credentials, destination_blob_nam
 source_file_name = sys.argv[1] # "local/path/to/file"
 key_file = sys.argv[2] # "path/to/keyfile.json"
 customer_id = sys.argv[3] # "customer-id"
-bucket_name = "socs-sbx"
+bucket_name = "agility-sandbox"
     
 print(f"Uploading {source_file_name} to {customer_id} bucket")
 
-object_name = "offline/{}/crm-data/{}".format(customer_id, datetime.now().strftime("%Y-%m-%d"))
+object_name = "offline/conversions/{}".format(customer_id, datetime.now().strftime("%Y-%m-%d"))
 upload_blob(bucket_name, source_file_name, creds, object_name)
