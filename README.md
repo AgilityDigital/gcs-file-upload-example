@@ -59,7 +59,6 @@ Payload formatings are as follows:
 
 ```json
 {
-{
 	"Metadata": {
 		"ClientId": "123456", // Same as the customer_id
 		"SentTimeStampUTC": "2023-03-23T22:11:13.2311903Z"
