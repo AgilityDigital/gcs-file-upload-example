@@ -6,8 +6,8 @@ This is a simple demo to upload a file to Google Cloud Storage (GCS) using Pytho
 
 In order to make the call you will need to have a service account created and an access key attached to it. The key should be in JSON format. The key should be generated once and rotated with some frequency.
 
-Here we are requiring a specific bucket and object path when you upload the file. 
-The bucket name will be provided to you during oboarding but for this doc we will use `{BUCKET_NAME}` and the object path is `/offline/conversions/{DATE}/{FILENAME}`. 
+Here we are requiring a specific bucket and object path when you upload the file.
+The bucket name will be provided to you during onboarding but for this doc we will use `{BUCKET_NAME}` and the object path is `/offline/conversions/{DATE}/{FILENAME}`.
 
 ### Payload
 
@@ -15,48 +15,48 @@ The files you upload to the bucket should be JSON in format following the format
 
 Payload formatings are as follows:
 
-| Field | Description | Type | Required |
-| --- | --- | --- | --- |
-| Metadata | Contains the metadata for the file | Object | Yes |
-| Milestones | Contains the milestones events that correspond to a conversion. There must be at least one conversion per file | Array | Yes |
+| Field      | Description                                                                                                    | Type   | Required |
+| ---------- | -------------------------------------------------------------------------------------------------------------- | ------ | -------- |
+| Metadata   | Contains the metadata for the file                                                                             | Object | Yes      |
+| Milestones | Contains the milestones events that correspond to a conversion. There must be at least one conversion per file | Array  | Yes      |
 
-| Metadata Fields | Description | Type | Required |
-| --- | --- | --- | --- |
-| ClientId | The unique identifier for the client. Provided to you by Agility. Use Sandbox for testing | String | Yes |
-| SentTimeStampUTC | The time the file was sent in UTC. Use the Format `2023-03-23T22:11:13.2311903Z` | String | Yes |
+| Metadata Fields  | Description                                                                               | Type   | Required |
+| ---------------- | ----------------------------------------------------------------------------------------- | ------ | -------- |
+| ClientId         | The unique identifier for the client. Provided to you by Agility. Use Sandbox for testing | String | Yes      |
+| SentTimeStampUTC | The time the file was sent in UTC. Use the Format `2023-03-23T22:11:13.2311903Z`          | String | Yes      |
 
-| Milestone Fields | Description | Type | Required |
-| --- | --- | --- | --- |
-| Email | The email of the user | String | If phone or address provided |
-| Phone | The phone number of the user | String | If email or address provided |
-| FullName | The full name of the user | String | No |
-| Address | The address of the user | Object | If email and phone not provided |
-| TimestampUtc | The time of the milestone in UTC. Use the Format `2023-03-23T22:11:13.2311903Z` | String | Yes |
-| ConversionType | The type of conversion. Use the preset list of offline conversion types. The list is set during the onboarding process | String | Yes |
-| ConversionKey | The unique identifier for the milestone. It could be an orderID, transactionID, SKU, or inboundCallID | String | Yes |
-| ProductID | The unique identifier for the product that was purchased | String | Yes |
-| Quantity | The number of items purchased | Integer | No |
-| Value | The total value of the transaction | Float | No |
-| CustomFields | Additional fields that you can use to pass additional information about the milestone | Object | No |
+| Milestone Fields | Description                                                                                                            | Type    | Required                        |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------- |
+| Email            | The email of the user                                                                                                  | String  | If phone or address provided    |
+| Phone            | The phone number of the user                                                                                           | String  | If email or address provided    |
+| FullName         | The full name of the user                                                                                              | String  | No                              |
+| Address          | The address of the user                                                                                                | Object  | If email and phone not provided |
+| TimestampUtc     | The time of the milestone in UTC. Use the Format `2023-03-23T22:11:13.2311903Z`                                        | String  | Yes                             |
+| ConversionType   | The type of conversion. Use the preset list of offline conversion types. The list is set during the onboarding process | String  | Yes                             |
+| ConversionKey    | The unique identifier for the milestone. It could be an orderID, transactionID, SKU, or inboundCallID                  | String  | Yes                             |
+| ProductID        | The unique identifier for the product that was purchased                                                               | String  | Yes                             |
+| Quantity         | The number of items purchased                                                                                          | Integer | No                              |
+| Value            | The total value of the transaction                                                                                     | Float   | No                              |
+| CustomFields     | Additional fields that you can use to pass additional information about the milestone                                  | Object  | No                              |
 
-| Address Fields | Description | Type | Required |
-| --- | --- | --- | --- |
-| City | The city of the user | String | Yes |
-| State | The state of the user | String | Yes |
-| Country | The country of the user | String | Yes |
-| Zip | The zip code of the user | String | Yes |
-| Street | The street address of the user | String | Yes |
+| Address Fields | Description                    | Type   | Required |
+| -------------- | ------------------------------ | ------ | -------- |
+| City           | The city of the user           | String | Yes      |
+| State          | The state of the user          | String | Yes      |
+| Country        | The country of the user        | String | Yes      |
+| Zip            | The zip code of the user       | String | Yes      |
+| Street         | The street address of the user | String | Yes      |
 
-| CustomFields Fields | Description | Type | Required |
-| --- | --- | --- | --- |
-| TrackingData2 | Determined during onboarding | String | No |
-| TrackingData3 | Determined during onboarding | String | No |
-| TrackingData4 | Determined during onboarding | String | No |
-| TrackingData5 | Determined during onboarding | String | No |
-| TrackingData6 | Determined during onboarding | String | No |
-| TrackingData7 | Determined during onboarding | String | No |
-| TrackingData8 | Determined during onboarding | String | No |
-| TrackingData9 | Determined during onboarding | String | No |
+| CustomFields Fields | Description                  | Type   | Required |
+| ------------------- | ---------------------------- | ------ | -------- |
+| TrackingData2       | Determined during onboarding | String | No       |
+| TrackingData3       | Determined during onboarding | String | No       |
+| TrackingData4       | Determined during onboarding | String | No       |
+| TrackingData5       | Determined during onboarding | String | No       |
+| TrackingData6       | Determined during onboarding | String | No       |
+| TrackingData7       | Determined during onboarding | String | No       |
+| TrackingData8       | Determined during onboarding | String | No       |
+| TrackingData9       | Determined during onboarding | String | No       |
 
 ```json
 {
@@ -64,36 +64,36 @@ Payload formatings are as follows:
 		"ClientId": "123456",
 		"SentTimeStampUTC": "2023-03-23T22:11:13.2311903Z"
 	}
-	"Milestones": [ 
+	"Milestones": [
 		{
 			"Email": "example@email.com",
 			"Phone": "+1(801)555-1234",
 			"FullName": "John Doe",
-			"Address": { 
+			"Address": {
 				"City": "Salt Lake City",
 				"State": "UT",
 				"Country": "USA",
 				"Zip": "84101",
 				"Street": "123 Main St"
 			},
-			"TimestampUtc": "2023-03-23T22:11:13.2311903Z", 
+			"TimestampUtc": "2023-03-23T22:11:13.2311903Z",
 			"ConversionType": "phone_offline",
-			"ConversionKey": "123456", 
-			"ProductID": "123456", 
+			"ConversionKey": "123456",
+			"ProductID": "123456",
 
-			"Quantity": 1, 
-			"Region": "UT", 
+			"Quantity": 1,
+			"Region": "UT",
 			"City": "Salt Lake City",
-            "OrderID": "123456", 
+            "OrderID": "123456",
 			"MerchantID": "123456",
 			"Value": 123.45,
 			"CustomFields": {
-				"TrackingData2": "CustomValue1", 
-				"TrackingData3": "CustomValue2", 
-				"TrackingData4": "CustomValue3", 
+				"TrackingData2": "CustomValue1",
+				"TrackingData3": "CustomValue2",
+				"TrackingData4": "CustomValue3",
 				"TrackingData5": "CustomValue4",
 				"TrackingData6": "CustomValue5",
-				"TrackingData7": "CustomValue6", 
+				"TrackingData7": "CustomValue6",
 				"TrackingData8": "CustomValue7",
 				"TrackingData9": "CustomValue8",
 			}
@@ -101,27 +101,34 @@ Payload formatings are as follows:
 	]
 }
 ```
+
 #### Metadata
 
 You can add multiple milestones to the file. The `Metadata` section is required and contains the `ClientId` and `SentTimeStampUTC` fields. The `Milestones` section is an array of milestones. Each milestone should have the following fields:
 
-The `ClientID` will be provided to you by agility and it links your account to conversion tracking algorithm in The Trade Desk.  This is a string.
+The `ClientID` will be provided to you by agility and it links your account to conversion tracking algorithm in The Trade Desk. This is a string.
 
 `SentTimeStampUTC` is the time that the file was sent to us. It needs to be in one of the following formats: `2006-01-02T15:04:05Z07:00` or `2006-01-02 15:04:05`. This is a string.
 
 #### Required Marketing Fields
 
-* The `ConversionType` is a string value that is selected to best match the kind of event that the milestone is. We have a preset list of offline conversion types that you can choose from, but you will have some additional one determined by your Agility representative. This is a string.
-* `ConversionKey` is the unique identifier for your milestone, it could be an orderID, transactionID, SKU, or inboundCallID (it may have been referred to as TD10 in the past).  This is a string.
-* The `ProductID` is the unique identifier for the product that was purchased (it may have been referred to as TD1 in the past).  This is a string.
-* The `Email` and `Phone` fields are used to identify the user. one of them is required. These are strings.
+- The `ConversionType` is a string value that is selected to best match the kind of event that the milestone is. We have a preset list of offline conversion types that you can choose from, but you will have some additional one determined by your Agility representative. This is a string.
+- `ConversionKey` is the unique identifier for your milestone, it could be an orderID, transactionID, SKU, or inboundCallID (it may have been referred to as TD10 in the past). This is a string.
+- The `ProductID` is the unique identifier for the product that was purchased (it may have been referred to as TD1 in the past). This is a string.
+- The `Email` and `Phone` fields are used to identify the user. one of them is required. These are strings.
 
 #### Optional Marketing Fields
 
-* The `Value` field is the total value of the transaction. This is a float value.
-* The `Quantity` field is the number of items purchased. This is an integer value.
-* The `CustomFields` are optional fields that you can use to pass additional information about the milestone. They are fields that you will have established as part of you onboarding process with your Precision Strategy Consultant. Some of the CustomFields may be duplicated with some standardized fields. This is expected to help us better track certain statistics. These are strings
-* The `Region`, `City`, `OrderID`, and `MerchantID` fields are optional fields that you can use to pass additional information about the milestone. These are strings.
+- The `Value` field is the total value of the transaction. This is a float value.
+- The `Quantity` field is the number of items purchased. This is an integer value.
+- The `CustomFields` are optional fields that you can use to pass additional information about the milestone. They are fields that you will have established as part of you onboarding process with your Precision Strategy Consultant. Some of the CustomFields may be duplicated with some standardized fields. This is expected to help us better track certain statistics. These are strings
+- The `Region`, `City`, `OrderID`, and `MerchantID` fields are optional fields that you can use to pass additional information about the milestone. These are strings.
+
+### Validation
+
+During onboarding the client will need to provide email(s) for support. These emails will be used to send notifications if there are any issues with the file that is uploaded.
+
+There is a validation process that occurs when the file is uploaded. If the file is not in the correct format, an email will be sent to the provided support email(s). The error message will contain the line number and the error message. If there is a validation error, the file will not be processed and an email will be sent to the provided support email(s) stating that the file was not processed and the reason(s) why. In order to avoid any issues, please make sure that the file is in the correct format following the table in [Payload section](#payload).
 
 ### Authentication
 
@@ -144,11 +151,9 @@ curl -X POST --data-binary @test.json \
 
 To see the runable script, check the [`upload.sh` file.](/bin/upload-curl.sh)
 
-
 ### Python
 
 We are following the steps from the [official GCS documentation](https://cloud.google.com/storage/docs/uploading-objects#uploading-an-object) to make the call using Python. This example is for a single file, but you can use the same method to do a multipart upload for larger files. The recommended max file size for a single upload is ~1GB. You will need to install the `google-cloud-storage` package.
-
 
 ```python
 from google.cloud import storage
@@ -166,13 +171,14 @@ source_file_name = sys.argv[1] # "local/path/to/file"
 key_file = sys.argv[2] # "path/to/keyfile.json"
 customer_id = sys.argv[3] # "customer-id"
 bucket_name = "{BUCKET_NAME}"
-    
+
 object_name = "offline/conversions/{DATE}".format(customer_id, datetime.now().strftime("%Y-%m-%d"))
 upload_blob(bucket_name, source_file_name, creds, object_name)
 ```
 
 To see the runable script, check the [`upload.py` file.](/src/upload.py)
 Use this command to run the script:
+
 ```bash
 GOOGLE_APPLICATION_CREDENTIALS=.credentials.json python3 src/upload.py test.json .credentials.json ${CLIENT_ID}
 ```
